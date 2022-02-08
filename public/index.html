@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="/javascripts/jquery.js"></script>
+  <script src="/javascripts/handlebars.js"></script>
+  
+  <link rel="stylesheet" href="stylesheets/whitespace-reset.css">
+  <link rel="stylesheet" href="stylesheets/style.css">
+</head>
+<body>
+  <header>
+    <h1>Contact Manager</h1>
+    <h3>Julia Shi JS230 Project</h3>
+  </header>
+
+  <div id="all_contacts" class="contacts_page"></div>
+  <div id="searchResult">
+    <p></p>
+  </div>
+
+  <script type="text/x-handlebars" id="editContactTemplate"> 
+    <div id="{{containerId}}" class="edit_add_form"  data-id="{{id}}">
+      <h1>{{heading}}</h1>
+      <form action="#" novalidate>
+        <p class="form_error_message fade_out">Form cannot be submitted until error is fixed;</p>
+        <label>Full name:
+          <input type="text" name="full_name" value="{{full_name}}" pattern="^[a-zA-Z]{2,}\s[a-zA-Z]{1,}" required>
+          <p class="input_error_message fade_out"></p>
+        </label>
+        <br>
+        <label>Email address:
+          <input type="text" name="email" value="{{email}}">
+        </label>
+        <br>
+        <label>Telephone Number:
+          <input type="text" name="phone_number" value="{{phone_number}}">
+        </label>
+        <br>
+        <label for="tags">Tags:
+          <ul>
+            {{#contains tags "work"}}
+            <li>work<input type="checkbox" name="tags" value="work" checked></li>
+            {{else}}
+            <li>work<input type="checkbox" name="tags" value="work"></li>
+            {{/contains}}
+
+            {{#contains tags "friend"}}
+            <li>friend<input type="checkbox" name="tags" value="friend" checked></li>
+            {{else}}
+            <li>friend<input type="checkbox" name="tags" value="friend"></li>
+            {{/contains}}
+
+            {{#contains tags "family"}}
+            <li>family<input type="checkbox" name="tags" value="family" checked></li>
+            {{else}}
+            <li>family<input type="checkbox" name="tags" value="family"></li>
+            {{/contains}}
+          </ul>
+        </label>
+        <br>
+        <div class="edit_button_wrapper">
+          <button type="submit" class="btn submit">Submit</button>
+          <button class="cancel btn"> Cancel</button>
+        </div>
+      </form>
+    </div>
+  </script>
+
+  <script id="emptyContactsTemplate" type="text/x-handlebars">
+    <div id="no_contact_banner">
+      <h1>There is no contact</h1>
+      <button class="add btn">Add contact</button>
+    </div>
+  </script>
+
+  <script id="addContactsBannerTemplate" type="text/x-handlebars">
+    <div id="add_contact_banner" class="contacts_page">
+      <button class="add">Add Contact</button>
+      <button id="show_all">Show All Contacts</button>
+      <input placeholder="Search" type="text" id="search">
+    </div>
+  </script>
+
+  <script id="singleContactTemplate" type="text/x-handlebars">
+    <ul id="contacts_wrapper">
+      {{#each contacts}}
+      <li data-id="{{id}}">
+        <div class="name_wrapper">
+          <h3>{{full_name}}</h3>
+        </div>
+        <div class="body_wrapper">
+          <dl>
+            <dt>Phone Number:</dt>
+            <dd>{{phone_number}}</dd>
+            <dt>Email:</dt>
+            <dd>{{email}}</dd>
+            <dt>Tags:</dt>
+            <dd>
+              {{#each tags}}
+              <span class="tag">{{this}}</span>
+              {{/each}}
+            </dd>
+          </dl>
+        </div>
+        <div class="add_button_wrapper">
+          <a class="edit btn">Edit</a>
+          <a class="delete btn">Delete</a>
+        </div>
+      </li>
+    {{/each}}
+    </ul>
+  </script>
+</body>
+<script type="module" src="javascripts/app.js"></script>
+</html>
